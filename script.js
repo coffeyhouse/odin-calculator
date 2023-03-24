@@ -5,38 +5,34 @@ let operator;
 let displayValue = null;
 
 function add(a, b) {
-    console.log(a + b);
+    return a + b;
 }
 
 function subtract(a, b) {
-    console.log(a - b);
+    return a - b;
 }
 
 function multiply(a, b) {
-    console.log(a * b);
+    return a * b;
 }
 
 function divide(a, b) {
-    console.log(a / b);
+    return a / b;
 }
 
 function operate(a, b, operator) {
     switch (operator) {
         case "add":
-            add(a, b);
-            break;
+            return add(a, b);
 
         case "subtract":
-            subtract(a, b);
-            break;
+            return subtract(a, b);
 
         case "multiply":
-            multiply(a, b);
-            break;
+            return multiply(a, b);
 
         case "divide":
-            divide(a, b);
-            break;
+            return divide(a, b);
     }
 }
 
@@ -44,6 +40,14 @@ const numbers = document.querySelectorAll("button.number");
 numbers.forEach(number => {
     number.addEventListener("click", updateDisplayValue);
 });
+
+const operators = document.querySelectorAll("button.operator");
+operators.forEach(operator => {
+    operator.addEventListener("click", operatorClicked);
+});
+
+const equals = document.querySelector("button.equals");
+equals.addEventListener("click", equalsClicked);
 
 function updateDisplayValue() {
     const displayDiv = document.querySelector("#result");
@@ -53,4 +57,24 @@ function updateDisplayValue() {
         displayValue = `${displayValue}${this.value}`;
     }
     displayDiv.textContent = displayValue;
+}
+
+function operatorClicked() {
+    if (displayValue !== null) {
+        firstNumber = displayValue;
+        operator = this.value;
+        displayValue = null;
+    }
+}
+
+function equalsClicked() {
+    if (firstNumber && operator && displayValue) {
+        secondNumber = displayValue;
+        const result = operate(parseInt(firstNumber), parseInt(secondNumber), operator);
+        const displayDiv = document.querySelector("#result");
+        
+        displayDiv.textContent = result;
+        displayValue = result;
+
+    }
 }
