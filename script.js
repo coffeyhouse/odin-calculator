@@ -22,23 +22,23 @@ function divide(a, b) {
 
 function operate(a, b, operator) {
     switch (operator) {
-        case "add":
+        case "+":
             return add(a, b);
 
-        case "subtract":
+        case "-":
             return subtract(a, b);
 
-        case "multiply":
+        case "x":
             return multiply(a, b);
 
-        case "divide":
+        case "/":
             return divide(a, b);
     }
 }
 
 const numbers = document.querySelectorAll("button.number");
 numbers.forEach(number => {
-    number.addEventListener("click", updateDisplayValue);
+    number.addEventListener("click", numberClicked);
 });
 
 const operators = document.querySelectorAll("button.operator");
@@ -49,14 +49,14 @@ operators.forEach(operator => {
 const equals = document.querySelector("button.equals");
 equals.addEventListener("click", equalsClicked);
 
-function updateDisplayValue() {
-    const displayDiv = document.querySelector("#result");
+function numberClicked() {
     if (displayValue === null) {
         displayValue = this.value;
     } else {
         displayValue = `${displayValue}${this.value}`;
     }
-    displayDiv.textContent = displayValue;
+
+    updateDisplayValue(displayValue);
 }
 
 function operatorClicked() {
@@ -71,10 +71,20 @@ function equalsClicked() {
     if (firstNumber && operator && displayValue) {
         secondNumber = displayValue;
         const result = operate(parseInt(firstNumber), parseInt(secondNumber), operator);
-        const displayDiv = document.querySelector("#result");
-        
-        displayDiv.textContent = result;
+        updateDisplayValue(result);
+        updateOperationValue();
+
         displayValue = result;
 
     }
+}
+
+function updateDisplayValue(val) {
+    const displayDiv = document.querySelector("#result");
+    displayDiv.textContent = val;
+}
+
+function updateOperationValue() {
+    const operationDiv = document.querySelector("#operation");
+    operationDiv.textContent = `${firstNumber}${operator}${secondNumber}`
 }
