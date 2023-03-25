@@ -61,6 +61,9 @@ function numberClicked() {
 }
 
 function operatorClicked() {
+    if (!currentNumber) {
+        currentNumber = "0";
+    }
 
     if (currentNumber && !storedNumber) {
         operator = this.value;
@@ -80,13 +83,19 @@ function equalsClicked() {
     if (currentNumber && storedNumber && operator) {
         const a = parseFloat(storedNumber);
         const b = parseFloat(currentNumber);
-        const result = operate(a, b, operator);
-        console.log(result);
-        updateDisplayValue(round(result));
-        updateOperationValue();
-
-        storedNumber = result;
-        currentNumber = null;
+        if (currentNumber == 0 & operator === "/") {
+            updateDisplayValue("8008135");
+            updateOperationValue();
+            storedNumber = null;
+            currentNumber = null;
+        } else {
+            const result = operate(a, b, operator);
+            updateDisplayValue(round(result));
+            updateOperationValue();
+            storedNumber = result;
+            currentNumber = null;
+        }
+       
     } else {
         console.log("not ready")
     }
@@ -98,7 +107,9 @@ function updateDisplayValue(val) {
 }
 
 function updateOperationValue() {
-    const operationDiv = document.querySelector("#operation");
+    const number1 = document.querySelector("#operation #number-1");
+    const number2 = document.querySelector("#operation #number-2");
+    const oper = document.querySelector("#operation #operator");
     let stored = "";
     let current = "";
     let operatorValue = "";
@@ -107,14 +118,16 @@ function updateOperationValue() {
         current = round(currentNumber);
     }
 
-    if (storedNumber) {
+    if (storedNumber || storedNumber == 0) {
         stored = round(storedNumber);
     } 
 
     if (operator) {
         operatorValue = operator;
     }
-    operationDiv.textContent = `${stored} ${operatorValue} ${current}`
+    number1.textContent = stored;
+    number2.textContent = current;
+    oper.textContent = operator;
 }
 
 function round(number) {

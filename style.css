@@ -1,11 +1,24 @@
 body {
     padding: 0;
     margin: 0;
+    font-family: 'Roboto';
 }
 
 p {
     margin: 0;
     padding: 0;
+}
+
+button {
+    background-color: #272B33;
+    border: 0;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: 600;
+    font-size: 24px;
 }
 
 #container {
@@ -16,61 +29,98 @@ p {
 }
 
 #calculator {
-    width: 500px;
+    width: 400px;
     display: flex;
     flex-direction: column;
-    height: 500px;
-    gap: 4px;
+    height: 700px;
+    gap: 12px;
+    background-color: #22252D;
+    border-radius: 36px;
+   
 }
 
 #display {
-    background-color: rgb(255, 255, 255);
     flex-grow:1;
-    border: 1px solid black;
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     justify-content: space-between;
-    padding: 24px;
+    padding: 12px 36px;
+    gap: 12px;
 }
 
 #operation {
-    font-size: 16px;
+    display: flex;
+    flex-grow: 1;
+    color: white;
+    align-items: flex-end;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 18px;
+}
+
+#operation #operator {
+    color: #EB6766;
+    font-size: 22px;
 }
 
 #result {
     font-size: 64px;
+    color: white;
+    font-weight: 600;
 }
 
 
 #buttons {
     display: flex;
-    gap: 4px;
+    background-color: #292D36;
+    border-radius: 36px;
+    padding: 36px;
+    gap: 12px;
 }
 
-#numbers {
+#left-side {
     display: flex;
     width: 75%;
-    flex-wrap: wrap;
-    gap: 4px;
+    gap: 12px;
+    flex-direction: column;
 }
 
-#numbers button {
-    width: calc(33% - 2px);
+#top-line, #numbers {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+
+}
+
+#left-side button {
+    width: calc(33% - 24px);
     padding: 24px;
     flex-grow: 1;
 }
 
-#operators {
+#right-side {
     display: flex;
     width: 25%;
     flex-wrap: wrap;
-    gap: 4px;
+    gap: 12px;
 }
 
-#operators button {
+#right-side button {
     width: 100%;
     padding: 24px;
     flex-grow: 1;
 }
 
+#left-side button.clear {
+    flex-grow: 0;
+    width: calc(33% - 6px);
+}
+
+.operator, .equals {
+    color: #EB6766;
+}
+
+.clear {
+    color: #79F1CC;
+}
