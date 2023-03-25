@@ -47,6 +47,9 @@ operators.forEach(operator => {
 const equals = document.querySelector("button.equals");
 equals.addEventListener("click", equalsClicked);
 
+const clear = document.querySelector("button.clear");
+clear.addEventListener("click", clearCalculator);
+
 function numberClicked() {
     if (!currentNumber) {
         currentNumber = this.value;
@@ -69,7 +72,7 @@ function operatorClicked() {
         equalsClicked();
     }
     operator = this.value;
-    
+
     updateOperationValue();
 }
 
@@ -77,11 +80,11 @@ function equalsClicked() {
     if (currentNumber && storedNumber && operator) {
         const a = parseFloat(storedNumber);
         const b = parseFloat(currentNumber);
-        const result = operate(a,b,operator);
+        const result = operate(a, b, operator);
         console.log(result);
         updateDisplayValue(round(result));
         updateOperationValue();
-        
+
         storedNumber = result;
         currentNumber = null;
     } else {
@@ -96,14 +99,33 @@ function updateDisplayValue(val) {
 
 function updateOperationValue() {
     const operationDiv = document.querySelector("#operation");
+    let stored = "";
     let current = "";
+    let operatorValue = "";
+
     if (currentNumber) {
         current = round(currentNumber);
     }
-    operationDiv.textContent = `${round(storedNumber)} ${operator} ${current}`
+
+    if (storedNumber) {
+        stored = round(storedNumber);
+    } 
+
+    if (operator) {
+        operatorValue = operator;
+    }
+    operationDiv.textContent = `${stored} ${operatorValue} ${current}`
 }
 
 function round(number) {
     const factorOfTen = Math.pow(10, 5);
     return Math.round(number * factorOfTen) / factorOfTen;
+}
+
+function clearCalculator() {
+    currentNumber = null;
+    storedNumber = null;
+    operator = null;
+    updateDisplayValue();
+    updateOperationValue();
 }
