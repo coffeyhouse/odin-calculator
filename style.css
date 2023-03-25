@@ -71,6 +71,7 @@ button:disabled {
     font-size: 64px;
     color: white;
     font-weight: 600;
+    min-height: 90px;
 }
 
 

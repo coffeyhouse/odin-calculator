@@ -29,7 +29,7 @@ function operate(a, b, operator) {
         case "x":
             return multiply(a, b);
 
-        case "/":
+        case "÷":
             return divide(a, b);
     }
 }
@@ -54,6 +54,7 @@ const dot = document.querySelector("button.dot");
 
 function numberClicked() {
     if (!currentNumber) {
+        updateOperationValue();
         if (this.value === ".") {
             currentNumber = "0.";
         } else {
@@ -95,7 +96,7 @@ function equalsClicked() {
         dot.removeAttribute("disabled");
         const a = parseFloat(storedNumber);
         const b = parseFloat(currentNumber);
-        if (currentNumber == 0 & operator === "/") {
+        if (currentNumber == 0 & operator === "÷") {
             updateDisplayValue("8008135");
             updateOperationValue();
             storedNumber = null;
@@ -107,7 +108,7 @@ function equalsClicked() {
             storedNumber = result;
             currentNumber = null;
         }
-       
+
     } else {
         console.log("not ready")
     }
@@ -118,7 +119,7 @@ function updateDisplayValue(val) {
     displayDiv.textContent = val;
 }
 
-function updateOperationValue() {
+function updateOperationValue(val) {
     const number1 = document.querySelector("#operation #number-1");
     const number2 = document.querySelector("#operation #number-2");
     const oper = document.querySelector("#operation #operator");
@@ -132,7 +133,7 @@ function updateOperationValue() {
 
     if (storedNumber || storedNumber == 0) {
         stored = round(storedNumber);
-    } 
+    }
 
     if (operator) {
         operatorValue = operator;
@@ -140,6 +141,10 @@ function updateOperationValue() {
     number1.textContent = stored;
     number2.textContent = current;
     oper.textContent = operator;
+
+    if (val) {
+        number1.textContent = val;
+    }
 }
 
 function round(number) {
@@ -151,6 +156,6 @@ function clearCalculator() {
     currentNumber = null;
     storedNumber = null;
     operator = null;
-    updateDisplayValue();
-    updateOperationValue();
+    updateDisplayValue("");
+    updateOperationValue("CLEARED");
 }
