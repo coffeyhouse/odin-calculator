@@ -1,8 +1,6 @@
-let firstNumber;
-let secondNumber;
+let currentNumber;
+let storedNumber;
 let operator;
-
-let displayValue = null;
 
 function add(a, b) {
     return a + b;
@@ -50,32 +48,44 @@ const equals = document.querySelector("button.equals");
 equals.addEventListener("click", equalsClicked);
 
 function numberClicked() {
-    if (displayValue === null) {
-        displayValue = this.value;
+    if (!currentNumber) {
+        currentNumber = this.value;
     } else {
-        displayValue = `${displayValue}${this.value}`;
+        currentNumber = `${currentNumber}${this.value}`
     }
 
-    updateDisplayValue(displayValue);
+    updateDisplayValue(currentNumber);
 }
 
 function operatorClicked() {
-    if (displayValue !== null) {
-        firstNumber = displayValue;
+
+    if (currentNumber && !storedNumber) {
         operator = this.value;
-        displayValue = null;
+        storedNumber = currentNumber;
+        currentNumber = null;
     }
+
+    if (currentNumber && storedNumber) {
+        equalsClicked();
+    }
+    operator = this.value;
+    
+    updateOperationValue();
 }
 
 function equalsClicked() {
-    if (firstNumber && operator && displayValue) {
-        secondNumber = displayValue;
-        const result = operate(parseInt(firstNumber), parseInt(secondNumber), operator);
-        updateDisplayValue(result);
+    if (currentNumber && storedNumber && operator) {
+        const a = parseFloat(storedNumber);
+        const b = parseFloat(currentNumber);
+        const result = operate(a,b,operator);
+        console.log(result);
+        updateDisplayValue(round(result));
         updateOperationValue();
-
-        displayValue = result;
-
+        
+        storedNumber = result;
+        currentNumber = null;
+    } else {
+        console.log("not ready")
     }
 }
 
@@ -86,5 +96,14 @@ function updateDisplayValue(val) {
 
 function updateOperationValue() {
     const operationDiv = document.querySelector("#operation");
-    operationDiv.textContent = `${firstNumber}${operator}${secondNumber}`
+    let current = "";
+    if (currentNumber) {
+        current = round(currentNumber);
+    }
+    operationDiv.textContent = `${round(storedNumber)} ${operator} ${current}`
+}
+
+function round(number) {
+    const factorOfTen = Math.pow(10, 5);
+    return Math.round(number * factorOfTen) / factorOfTen;
 }
