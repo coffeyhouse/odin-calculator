@@ -21,6 +21,10 @@ button {
     font-size: 24px;
 }
 
+button:disabled {
+    color: rgb(65, 65, 65);
+}
+
 #container {
     height: 100vh;
     display: flex;

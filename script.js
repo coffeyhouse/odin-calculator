@@ -50,17 +50,28 @@ equals.addEventListener("click", equalsClicked);
 const clear = document.querySelector("button.clear");
 clear.addEventListener("click", clearCalculator);
 
+const dot = document.querySelector("button.dot");
+
 function numberClicked() {
     if (!currentNumber) {
-        currentNumber = this.value;
+        if (this.value === ".") {
+            currentNumber = "0.";
+        } else {
+            currentNumber = this.value;
+        }
     } else {
         currentNumber = `${currentNumber}${this.value}`
+    }
+
+    if (this.value === ".") {
+        dot.setAttribute("disabled", true);
     }
 
     updateDisplayValue(currentNumber);
 }
 
 function operatorClicked() {
+    dot.removeAttribute("disabled");
     if (!currentNumber) {
         currentNumber = "0";
     }
@@ -81,6 +92,7 @@ function operatorClicked() {
 
 function equalsClicked() {
     if (currentNumber && storedNumber && operator) {
+        dot.removeAttribute("disabled");
         const a = parseFloat(storedNumber);
         const b = parseFloat(currentNumber);
         if (currentNumber == 0 & operator === "/") {
